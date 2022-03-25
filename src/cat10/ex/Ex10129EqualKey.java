@@ -7,6 +7,7 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
 
 public class Ex10129EqualKey {
+    // 等值键
     public static int rank(int key, int[] a) {
         int lo = 0;
         int hi = a.length - 1;
@@ -14,14 +15,23 @@ public class Ex10129EqualKey {
             int mid = lo + (hi - lo) / 2;
             if (key < a[mid]) hi = mid - 1;
             else if (key > a[mid]) lo = mid + 1;
-            else return maxRank(key, mid, a);
+            else return mid;
         }
         return -1;
     }
 
-    private static int maxRank(int key, int equalRank, int[] a) {
-        if (equalRank == a.length || a[equalRank + 1] > key) return equalRank;
-        else return maxRank(key, equalRank + 1, a);
+    private static int maxRank(int key, int[] a) {
+        int rank = rank(key, a);
+        while (rank < a.length - 1 && a[rank + 1] == key)
+            rank++;
+        return rank;
+    }
+
+    private static int count(int key, int[] a) {
+        int rank = rank(key, a);
+        while (rank > 0 && a[rank - 1] == key)
+            rank++;
+        return rank;
     }
 
     public static void main(String[] args) {
@@ -29,8 +39,8 @@ public class Ex10129EqualKey {
         Arrays.sort(whitelist);
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            if (rank(key, whitelist) > 0)
-                StdOut.println(rank(key, whitelist));
+            StdOut.println(maxRank(key, whitelist));
+            StdOut.println(count(key, whitelist));
         }
     }
 }
