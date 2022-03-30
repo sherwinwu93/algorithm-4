@@ -37,4 +37,13 @@ public class P056Date {
         P056Date that = (P056Date) x;
         return that.month == month && that.day == day && that.year == year;
     }
+
+    public static P056Date parseDate(String str) {
+        String[] fields = str.split("/");
+        int m = Integer.parseInt(fields[0]);
+        int d = Integer.parseInt(fields[1]);
+        int y = Integer.parseInt(fields[2]);
+        P056Date date = new P056Date(m, d, y);
+        return date;
+    }
 }
