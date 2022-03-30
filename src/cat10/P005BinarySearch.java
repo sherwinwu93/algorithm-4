@@ -20,9 +20,6 @@ public class P005BinarySearch {
     }
 
     public static void main(String[] args) {
-        for (String arg : args) {
-            System.out.println(arg);
-        }
         int[] whitelist = In.readInts(args[0]);
 
         Arrays.sort(whitelist);
