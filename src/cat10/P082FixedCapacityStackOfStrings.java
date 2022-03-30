@@ -26,6 +26,9 @@ public class P082FixedCapacityStackOfStrings {
     int size() {
         return N;
     }
+    boolean isFull() {
+        return N == a.length;
+    }
     //测试用例
     public static void main(String[] args) {
         P082FixedCapacityStackOfStrings s;
