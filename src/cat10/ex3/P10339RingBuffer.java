@@ -48,6 +48,7 @@ public class P10339RingBuffer<Item> {
         else {
             Item item = ringBuffer[head];
             nextHead();
+            N--;
             consumeDate(item);
             fill();
         }
