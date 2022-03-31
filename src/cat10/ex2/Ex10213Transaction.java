@@ -51,6 +51,14 @@ public class Ex10213Transaction implements Comparable<Ex10213Transaction> {
         return super.hashCode();
     }
 
+    public static Ex10213Transaction parseTransaction(String string) {
+        String[] fields = string.split(" ");
+        String who = fields[0];
+        Ex10211SmartDate when = new Ex10211SmartDate(fields[1]);
+        double amount = Double.parseDouble(fields[2]);
+        return new Ex10213Transaction(who, when, amount);
+    }
+
     public static void main(String[] args) {
         Ex10213Transaction transaction = new Ex10213Transaction("wusd", new Ex10211SmartDate(2, 19, 2009), 1.0);
         StdOut.println(transaction);
