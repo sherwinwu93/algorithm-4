@@ -3,7 +3,7 @@ package cat10.ex3;
 import cat10.P095Queue;
 import edu.princeton.cs.algs4.StdOut;
 
-public class P10337Josephus {
+public class Ex10337Josephus {
     public static void main(String[] args) {
         int N = Integer.parseInt(args[0]);
         int M = Integer.parseInt(args[1]);

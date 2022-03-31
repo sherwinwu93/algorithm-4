@@ -3,7 +3,22 @@ package cat10.ex3;
 import cat10.P095Queue;
 import edu.princeton.cs.algs4.StdOut;
 
-public class P10339RingBuffer<Item> {
+public class Ex10339RingBuffer<Item> {
+    public static void main(String[] args) {
+        Ex10339RingBuffer<Integer> buffer = new Ex10339RingBuffer<Integer>(2);
+        consumeTest(buffer);
+    }
+    public static void consumeTest(Ex10339RingBuffer<Integer> buffer) {
+        buffer.produce(1);
+        buffer.produce(2);
+        buffer.consume();
+        buffer.produce(3);
+        buffer.produce(4);
+        buffer.produce(5);
+        buffer.produce(6);
+        buffer.consume();
+        StdOut.println();
+    }
     private Item[] ringBuffer;
     private int head;
     private int tail;
@@ -12,13 +27,14 @@ public class P10339RingBuffer<Item> {
     private int consumedCnt;
     private P095Queue<Item> freeze = new P095Queue<Item>();
 
-    public P10339RingBuffer(int cap) {
+    public Ex10339RingBuffer(int cap) {
         ringBuffer = (Item[]) new Object[cap];
     }
 
     public void produce(Item item) {
         if (consumedCnt > 0) {
             consumeDate(item);
+            consumedCnt--;
         } else if (isFull()) {
             freeze.enqueue(item);
         } else {
@@ -39,7 +55,6 @@ public class P10339RingBuffer<Item> {
     }
 
     private void consumeDate(Item item) {
-        consumedCnt--;
         StdOut.println(item);
     }
 

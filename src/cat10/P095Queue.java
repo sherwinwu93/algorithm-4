@@ -33,6 +33,14 @@ public class P095Queue<Item> implements Iterable<Item> {
 
     public P095Queue() {
     }
+    public P095Queue(P095Queue<Item> q) {
+        int M = q.size();
+        for (int i = 0; i < M; i++) {
+            Item item = q.dequeue();
+            enqueue(item);
+            q.enqueue(item);
+        }
+    }
 
     public void enqueue(Item item) {
         Node oldLast = last;

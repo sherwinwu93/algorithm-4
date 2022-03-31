@@ -9,6 +9,7 @@ import java.util.Iterator;
  * 算法1.2 下压堆栈 (链表实现)
  */
 public class P094Stack<Item> implements Iterable<Item>{
+
     public static void main(String[] args) {
         P094Stack<String> s= new P094Stack<String>();
         while (!StdIn.isEmpty()) {
@@ -40,6 +41,18 @@ public class P094Stack<Item> implements Iterable<Item>{
         first = first.next;
         N--;
         return item;
+    }
+    public P094Stack() {
+    }
+    public P094Stack(P094Stack<Item> s) {
+        P094Stack<Item> reverse = new P094Stack<Item>();
+        while (!s.isEmpty())
+            reverse.push(s.pop());
+        while (!reverse.isEmpty()) {
+            Item item = reverse.pop();
+            s.push(item);
+            push(item);
+        }
     }
     public Item peek() {
         return first.item;

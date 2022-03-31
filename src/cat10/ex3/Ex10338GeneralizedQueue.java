@@ -3,9 +3,9 @@ package cat10.ex3;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class P10338GeneralizedQueue<Item> {
+public class Ex10338GeneralizedQueue<Item> {
     public static void main(String[] args) {
-        P10338GeneralizedQueue<Integer> queue = new P10338GeneralizedQueue<Integer>();
+        Ex10338GeneralizedQueue<Integer> queue = new Ex10338GeneralizedQueue<Integer>();
         while (!StdIn.isEmpty())
             queue.insert(StdIn.readInt());
         StdOut.println(queue.delete(2));
@@ -15,7 +15,7 @@ public class P10338GeneralizedQueue<Item> {
     private Item[] a = (Item[]) new Object[100];
     private int N;
 
-    public P10338GeneralizedQueue() {
+    public Ex10338GeneralizedQueue() {
     }
 
     public boolean isEmpty() {
