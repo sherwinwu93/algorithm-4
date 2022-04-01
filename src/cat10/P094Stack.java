@@ -3,6 +3,7 @@ package cat10;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -65,12 +66,19 @@ public class P094Stack<Item> implements Iterable<Item>{
     }
     private class ListIterator implements Iterator<Item> {
         private Node curr = first;
+        private int M = N;
 
         public boolean hasNext() {
+            if (changed()) throw new ConcurrentModificationException();
             return curr != null;
         }
 
+        private boolean changed() {
+            return M != N;
+        }
+
         public Item next() {
+            if (changed()) throw new ConcurrentModificationException();
             Item item = curr.item;
             curr = curr.next;
             return item;
