@@ -2,6 +2,7 @@ package cat10;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import lib.MathUtils;
 
 public class P109ThreeSum {
     // 3个数的和是0的对数
@@ -12,10 +13,13 @@ public class P109ThreeSum {
             for (int j = i + 1; j < N; j++)
                 for (int k = j + 1; k < N; k++)
                     // 执行N*(N-1)*(N-2)/6
-                    if (a[i] + a[j] + a[k] == 0)
+//                    if (a[i] + a[j] + a[k] == 0)
+                    // ex10402防溢出
+                    if (MathUtils.threeSum(a[i], a[j], a[k]))
                         cnt++;
         return cnt;
     }
+
     // 1Kints: 0.212
     // 2Kints: 1.422
     // 4Kints: 11.325

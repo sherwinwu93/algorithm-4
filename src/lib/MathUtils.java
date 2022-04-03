@@ -1,6 +1,12 @@
 package lib;
 
 public class MathUtils {
+    public static boolean threeSum(int x, int y, int z) {
+        int xy = x + y;
+        if (x > 0 && y > 0 && xy < 0) return false;
+        else if (x < 0 && y < 0 && xy > 0) return false;
+        else return xy == -z;
+    }
     public static int abs(int x) {
         if (x < 0) return -x;
         else return x;

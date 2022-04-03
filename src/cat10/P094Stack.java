@@ -30,8 +30,10 @@ public class P094Stack<Item> implements Iterable<Item>{
     public boolean isEmpty() {
         return N == 0;
     }
+    // O(c)
     public void push(Item item) {
         Node oldFirst = first;
+        // 这个也是O(c)
         first = new Node();
         first.item = item;
         first.next = oldFirst;
