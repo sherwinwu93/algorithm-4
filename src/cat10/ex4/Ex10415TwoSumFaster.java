@@ -17,17 +17,15 @@ public class Ex10415TwoSumFaster {
     public static int count(int[] a) {
         int cnt = 0;
         int N = a.length;
-        int[] b = new int[N];
-        for (int i = 0; i < N; i++)
-            b[i] = a[N - 1 - i];
-        for (int i = 0, j = 0; i < N && j < N;) {
-            int twoSum = a[i] + a[j];
-            if (twoSum == 0) {
+        for (int i = 0, j = N - 1; i != j; ) {
+            int sum = a[i] + a[j];
+            if (sum > 0) j--;
+            else if (sum < 0) i++;
+            else {
                 cnt++;
                 i++;
-                j++;
-            } else if (twoSum < 0) j++;
-            else i++;
+                j--;
+            }
         }
         return cnt;
     }
