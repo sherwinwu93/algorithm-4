@@ -2,7 +2,6 @@ package cat10.ex4;
 
 public class Ex10419MinInMatrix {
     public static void main(String[] args) {
-
     }
     public static double minInSome(double[][] a) {
         int xlo = 0;
