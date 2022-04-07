@@ -46,5 +46,8 @@ public class Ex10420IncreaseAndReduceSearch {
         int[] b = {1,3, 5, 7, 15, 10, 9, 6, 4, 2};
         if (rank(15, b) != -1)
             StdOut.println(15);
+        int[] c = {1,2, 3,4, 5,6, 7,8,9,10,11, 15, 12};
+        if (rank(15, c) != -1)
+            StdOut.println(15);
     }
 }
