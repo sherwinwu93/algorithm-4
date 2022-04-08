@@ -8,31 +8,38 @@ import edu.princeton.cs.algs4.StdOut;
  * 当N为0时栈为空
  * 栈的顶部位于a[N-1]
  */
-public class P082FixedCapacityStackOfStrings {
-    private String[] a;//stack entries
+public class P082FixedCapacityStack<Item> {
+    private Item[] a;//stack entries
     private int N; //size
-    public P082FixedCapacityStackOfStrings(int cap) {
-        a = new String[cap];
+
+    public P082FixedCapacityStack(int cap) {
+        a = (Item[]) new Object[cap];
     }
-    void push(String item) {
+
+    public void push(Item item) {
         a[N++] = item;
     }
-    String pop() {
+
+    public Item pop() {
         return a[--N];
     }
-    boolean isEmpty() {
+
+    public boolean isEmpty() {
         return N == 0;
     }
-    int size() {
+
+    public int size() {
         return N;
     }
-    boolean isFull() {
+
+    public boolean isFull() {
         return N == a.length;
     }
+
     //测试用例
     public static void main(String[] args) {
-        P082FixedCapacityStackOfStrings s;
-        s = new P082FixedCapacityStackOfStrings(100);
+        P082FixedCapacityStack<String> s;
+        s = new P082FixedCapacityStack<String>(100);
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-"))

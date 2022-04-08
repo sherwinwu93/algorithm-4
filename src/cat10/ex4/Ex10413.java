@@ -1,11 +1,5 @@
 package cat10.ex4;
 
-import cat10.P082FixedCapacityStackOfStrings;
-import edu.princeton.cs.algs4.Accumulator;
-import edu.princeton.cs.algs4.Interval1D;
-import edu.princeton.cs.algs4.Point2D;
-import edu.princeton.cs.algs4.Transaction;
-
 public class Ex10413 {
     // 一个对象所需的存储量
     public static void main(String[] args) {
