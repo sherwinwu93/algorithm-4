@@ -37,6 +37,15 @@ public class P098Bag<Item> implements Iterable<Item> {
         first.next = oldFirst;
         N++;
     }
+    public boolean contains(Item item) {
+        if (first == null) return false;
+        Node currentNode = first;
+        while (currentNode != null) {
+            if (currentNode.item == item) return true;
+            currentNode = currentNode.next;
+        }
+        return false;
+    }
     public int size() {
         return N;
     }

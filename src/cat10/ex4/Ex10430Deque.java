@@ -20,28 +20,37 @@ public class Ex10430Deque {
     private P094Stack<Integer> stack = new P094Stack<Integer>();
     private Ex10332Steque<Integer> steque = new Ex10332Steque<Integer>();
     public void pushLeft(int item) {
-        steque.enqueue(item);
-    }
-    public void pushRight(int item) {
-        if (!stack.isEmpty()) stackToSteque();;
         steque.push(item);
     }
+    public void pushRight(int item) {
+        stack.push(item);
+    }
     public int popLeft()  {
-        if (!steque.isEmpty()) stequeToStack();
-        return stack.pop();
+        if (steque.isEmpty()) {
+            int N = stack.size();
+            if (N == 1) return stack.pop();
+            for (int i = 0; i < N/2; i++)
+                steque.push(stack.pop());
+            for (int i = N / 2; i< N; i++)
+                steque.enqueue(stack.pop());
+            for (int i = N/ 2; i < N; i++ )
+                steque.enqueue(steque.pop());
+            for (int i = 0; i < N/2; i++)
+                stack.push(steque.pop());
+        }
+        int item = steque.pop();
+        return item;
     }
     public int popRight() {
-        if (!stack.isEmpty()) stackToSteque();
-        return steque.pop();
-    }
-    private void stackToSteque() {
-        int N = stack.size();
-        for (int i = 0; i < N; i++)
-            steque.push(stack.pop());
-    }
-    private void stequeToStack() {
-        int N = steque.size();
-        for (int i = 0; i < N; i++)
-            stack.push(steque.pop());
+        if (stack.isEmpty()) {
+            int N = steque.size();
+            if (N==1) return steque.pop();
+            for (int i = 0; i <N/2;i++)
+                steque.enqueue(steque.pop());
+            for (int i = N/2; i <N;i++)
+                stack.push(steque.pop());
+        }
+        int item = stack.pop();
+        return item;
     }
 }
