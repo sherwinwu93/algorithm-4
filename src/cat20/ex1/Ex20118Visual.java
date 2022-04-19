@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 import java.awt.*;
 
-public class Ex20117Visual {
+public class Ex20118Visual {
     // Selection
     /*private static void sort(Comparable[] a) {
         int N = a.length;
@@ -23,6 +23,7 @@ public class Ex20117Visual {
     // Insertion
     public static void sort(Comparable[] a) {
         int N = a.length;
+        StdDraw.show(3000);
         for (int i = 1; i < N; i++)
             for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
                 exch(a, j, j - 1);
@@ -52,7 +53,7 @@ public class Ex20117Visual {
             StdDraw.filledRectangle(0.5 + i, a[i] / 2, .49, a[i] / 2);
             if (i == redI || i == grayJ) StdDraw.setPenColor(Color.BLACK);
         }
-        StdDraw.show(2000);
+        StdDraw.show(500);
     }
 
     public static boolean isSorted(Comparable[] a) {
