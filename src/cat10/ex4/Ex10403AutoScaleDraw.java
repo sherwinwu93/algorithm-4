@@ -10,13 +10,13 @@ import java.util.List;
 
 import static cat10.P111DoublingTest.timeTrial;
 
-public class Ex10403VisualDoublingTest {
+public class Ex10403AutoScaleDraw {
     private final List<Point2D> points = new ArrayList<Point2D>();
     private int xMax;
     private double yMax;
 
     //见P111DoublingTest
-    public Ex10403VisualDoublingTest() {
+    public Ex10403AutoScaleDraw() {
         StdDraw.setCanvasSize(500, 500);
         StdDraw.setPenRadius(.005);
         StdDraw.setPenColor(Color.BLUE);
@@ -66,7 +66,7 @@ public class Ex10403VisualDoublingTest {
     }
 
     public static void main(String[] args) {
-        Ex10403VisualDoublingTest visual = new Ex10403VisualDoublingTest();
+        Ex10403AutoScaleDraw visual = new Ex10403AutoScaleDraw();
         for (int N = 250; true; N += N) {
             double time = timeTrial(N);
             StdOut.printf("%7d %5.1f\n", N, time);

@@ -53,6 +53,11 @@ public class Ex10333Deque<Item> implements Iterable<Item> {
         lastSentry.last = t;
         N++;
     }
+    public Item peekRight() {
+        validateEmpty();
+        Item item = lastSentry.last.item;
+        return item;
+    }
     public Item popLeft() {
         validateEmpty();
         Node first = firstSentry.next;
