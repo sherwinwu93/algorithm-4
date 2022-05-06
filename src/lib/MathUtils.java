@@ -44,7 +44,7 @@ public class MathUtils {
             sum += 1.0 / i;
         return sum;
     }
-    public static double log2(double x) {
+    public static double lg(double x) {
         return Math.log(x) / Math.log(2);
     }
 }

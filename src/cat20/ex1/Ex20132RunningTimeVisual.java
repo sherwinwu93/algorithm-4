@@ -20,10 +20,10 @@ public class Ex20132RunningTimeVisual {
         int T = Integer.parseInt(args[2]);
         rescale();
         for (; true; N += N) {
-            double x = MathUtils.log2(N);
-            double y0 = MathUtils.log2(100000000 * time("selection", N, T));
-            double y1 = MathUtils.log2(100000000 * time("insertion", N, T));
-            double y2 = MathUtils.log2(100000000 * time("shell", N, T));
+            double x = MathUtils.lg(N);
+            double y0 = MathUtils.lg(100000000 * time("selection", N, T));
+            double y1 = MathUtils.lg(100000000 * time("insertion", N, T));
+            double y2 = MathUtils.lg(100000000 * time("shell", N, T));
             StdOut.println(x + ":" + y0);
             StdOut.println(x + ":" + y1);
             StdOut.println(x + ":" + y2);
