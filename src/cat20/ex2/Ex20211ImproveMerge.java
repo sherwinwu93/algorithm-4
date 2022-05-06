@@ -20,14 +20,8 @@ public class Ex20211ImproveMerge {
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        Comparable[] temp = a;
-        a = aux;
-        aux = temp;
         sort(a, lo, mid);
         sort(a, mid + 1, hi);
-        temp = a;
-        a = aux;
-        aux = temp;
         merge(a, lo, mid, hi);
     }
 
@@ -48,6 +42,9 @@ public class Ex20211ImproveMerge {
     public static void merge(Comparable[] a, int lo, int mid, int hi) {
         // 检测数组是否已经有序
         if (!less(a[mid + 1], a[mid])) return;
+        Comparable[] temp = a;
+        a = aux;
+        aux = temp;
         int i = lo;
         int j = mid + 1;
         for (int k = lo; k <= hi; k++) {
@@ -95,7 +92,8 @@ public class Ex20211ImproveMerge {
      * @param args
      */
     public static void main(String[] args) {
-        String[] a = In.readStrings();
+//        String[] a = In.readStrings();
+        Integer[] a = {0,5,3,6,4,7,1,2};
         sort(a);
         StdOut.println(true + ":" + isSorted(a));
         show(a);
