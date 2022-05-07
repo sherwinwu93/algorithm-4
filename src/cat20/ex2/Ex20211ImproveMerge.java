@@ -1,35 +1,41 @@
 package cat20.ex2;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Ex20211ImproveMerge {
-    private static Comparable[] aux;
 
     public static void sort(Comparable[] a) {
         int N = a.length;
-        aux = new Comparable[N];
-        sort(a, 0, N - 1);
+        // Comparable[] aux = a; 相同指针
+        // Comparable[] aux = a.clone(); 不同指针
+        // 解决了第一次aux可能为空的情况
+        Comparable[] aux = a.clone();
+        sort(aux, a, 0, N - 1);
     }
 
-    private static void sort(Comparable[] a, int lo, int hi) {
+    /**
+     * 在lo到hi中, 从dest排序到src,得到dest[lo...hi]有序
+     * @param src 源数组
+     * @param dest 目标数组
+     * @param lo
+     * @param hi
+     */
+    private static void sort(Comparable[] src, Comparable[] dest, int lo, int hi) {
         if (lo >= hi) return;
-        //1.加快小数组的排序速度
-        if (hi - lo < 7) {
-            insertion(a, lo, hi);
+        if (hi - lo < CUT_OFF) {
+            insertion(dest, lo, hi);
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        Comparable[] temp = a;
-        a = aux;
-        aux = temp;
-        sort(a, lo, mid);
-        sort(a, mid + 1, hi);
-        temp = a;
-        a = aux;
-        aux = temp;
-        merge(a, lo, mid, hi);
+        // 在lo到mid中, 从dest排序到src中
+        sort(dest, src, lo, mid);
+        // 在mid+1到hi中,从dest排序到src中
+        sort(dest, src, mid+1, hi);
+        // 在lo,mid,hi中,从src归并到dest中
+        if (less(dest[mid+1], dest[mid]))
+            merge(src, dest, lo, mid, hi);
     }
+    private static int CUT_OFF = 3;
 
     private static void insertion(Comparable[] a, int lo, int hi) {
         for (int i = lo + 1; i <= hi; i++)
@@ -45,20 +51,18 @@ public class Ex20211ImproveMerge {
     }
 
     // 原地归并的抽象方法
-    public static void merge(Comparable[] a, int lo, int mid, int hi) {
-        // 检测数组是否已经有序
-        if (!less(a[mid + 1], a[mid])) return;
+    public static void merge(Comparable[] src, Comparable[] dest, int lo, int mid, int hi) {
         int i = lo;
-        int j = mid + 1;
+        int j = mid+1;
         for (int k = lo; k <= hi; k++) {
-            // 左半边用尽
-            if (i > mid) a[k] = aux[j++];
-                // 右半边用尽
-            else if (j > hi) a[k] = aux[i++];
-                // 右边比左边小
-            else if (less(aux[j], aux[i])) a[k] = aux[j++];
-                // 左边小于等于右边
-            else a[k] = aux[i++];
+            // 左半边取尽
+            if (i > mid) dest[k] = src[j++];
+            // 右半边取尽
+            else if (j > hi) dest[k] = src[i++];
+            // 右边比左边小
+            else if (less(src[j], src[i])) dest[k] = src[j++];
+            // 左边小于等于右边
+            else dest[k] = src[i++];
         }
     }
 
@@ -95,7 +99,8 @@ public class Ex20211ImproveMerge {
      * @param args
      */
     public static void main(String[] args) {
-        String[] a = In.readStrings();
+//        String[] a = In.readStrings();
+        Integer[] a = {6,5,3,7,0,4,2,1};
         sort(a);
         StdOut.println(true + ":" + isSorted(a));
         show(a);
