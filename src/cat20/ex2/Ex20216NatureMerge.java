@@ -10,6 +10,12 @@ import java.util.Arrays;
  * 自底向上的归并排序,当需要将两个子数组排序时能够利用数组中已经有序的部分.
  * 1. 首先找到有序的子数组(移动指针直到当前元素比上一个元素小为止),然后再找出另一个并将它们归并.
  * 根据数组大小和递增子数组的最大长度分析算法的运行时间
+ *
+ * 1. 找出有序的子数组(a,0,hi1)
+ * 2. 找到另一个有序的子数组(a, hi1+1, hi2)
+ * 3. 归并(a, 0,hi1,hi2)
+ * 4. 重复1~3
+ * 4. 如果hi1==N, 停止归并
  **/
 public class Ex20216NatureMerge {
     private static Comparable[] aux;
@@ -17,26 +23,25 @@ public class Ex20216NatureMerge {
     public static void sort(Comparable[] a) {
         int N = a.length;
         aux = new Comparable[N];
-        sort(a, 0, N - 1);
-    }
-
-    private static void sort(Comparable[] a, int lo, int hi) {
-        int subLo = lo;
-        while (subLo <= hi) {
-            subLo = lo;
-            int mid = sortedHi(a, subLo);
-            int subHi = sortedHi(a, mid + 1);
-            merge(a, subLo, mid, subHi);
-            subLo = subHi + 1;
+        int lo1 = 0;
+        int hi1 = findSortedHi(a, lo1);
+        while (hi1 < N - 1) {
+            int hi2 = findSortedHi(a, hi1 + 1);
+            merge(a, lo1, hi1, hi2);
+            hi1 = findSortedHi(a, lo1);
         }
     }
 
-    private static int sortedHi(Comparable[] a, int lo) {
-        int hi = lo;
-        for (int i = lo; i < a.length - 1; i++)
-            if(less(a[i+1], a[i])) return hi;
-            else hi = i;
-        return hi;
+
+    private static int findSortedHi(Comparable[] a, int lo) {
+        int hi = lo + 1;
+        int N = a.length;
+        while (true) {
+            if (hi == N) break;
+            if (less(a[hi], a[hi - 1])) break;
+            hi++;
+        }
+        return hi - 1;
     }
 
     public static void merge(Comparable[] a, int lo, int mid, int hi) {
@@ -61,8 +66,15 @@ public class Ex20216NatureMerge {
     }
 
     public static void main(String[] args) {
+//        testFindSortedHi();
         Integer[] a = {3, 6, 7, 2, 4, 1, 0, 5};
         sort(a);
         StdOut.println(Arrays.toString(a));
+    }
+    public static void testFindSortedHi() {
+        Integer[] a = {6, 3, 7, 2, 4, 1, 0, 5};
+//        Integer[] a = {0,1,2,3,4,5,6};
+        int hi = findSortedHi(a, 0);
+        StdOut.println(hi);
     }
 }
