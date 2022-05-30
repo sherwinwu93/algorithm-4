@@ -2,6 +2,8 @@ package lib;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Collection;
+
 public class PrintUtils {
     public static void print2DArray(String[][] a) {
         for (int i = 0; i < a.length; i++) {
@@ -27,6 +29,11 @@ public class PrintUtils {
     public static void printArray(int[] a){
         for (int i = 0; i < a.length; i++)
             StdOut.print(a[i] + " ");
+        StdOut.println();
+    }
+    public static void printArray(Collection<? extends Object> c){
+        for (Object o : c)
+            StdOut.print(o + " ");
         StdOut.println();
     }
     public static void printArray(Integer[] a){

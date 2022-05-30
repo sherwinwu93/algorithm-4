@@ -15,7 +15,7 @@ import java.util.Arrays;
  * 2. 找到另一个有序的子数组(a, hi1+1, hi2)
  * 3. 归并(a, 0,hi1,hi2)
  * 4. 重复1~3
- * 4. 如果hi1==N, 停止归并
+ * 4. 如果hi1==N-1, 停止归并
  **/
 public class Ex20216NatureMerge {
     private static Comparable[] aux;
@@ -23,12 +23,12 @@ public class Ex20216NatureMerge {
     public static void sort(Comparable[] a) {
         int N = a.length;
         aux = new Comparable[N];
-        int lo1 = 0;
-        int hi1 = findSortedHi(a, lo1);
-        while (hi1 < N - 1) {
+        int lo = 0;
+        int hi1 = findSortedHi(a, lo);
+        while (hi1 != N - 1) {
             int hi2 = findSortedHi(a, hi1 + 1);
-            merge(a, lo1, hi1, hi2);
-            hi1 = findSortedHi(a, lo1);
+            merge(a, lo, hi1, hi2);
+            hi1 = findSortedHi(a, lo);
         }
     }
 
