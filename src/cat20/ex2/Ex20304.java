@@ -7,6 +7,7 @@ import lib.PrintUtils;
  * 给出六个含有10个元素的数组,使得Quick.sort()所需的比较次数达到最坏情况
  * 关键是每次切分,总由一个空数组
  **/
+// Quick的最坏情况
 public class Ex20304 {
     public static void main(String[] args) {
         // 1,2,3,4,5,6,7,8,9,0

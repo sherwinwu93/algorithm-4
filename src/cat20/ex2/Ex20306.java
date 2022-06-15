@@ -7,6 +7,7 @@ import edu.princeton.cs.algs4.StdRandom;
  * Created by Wusd on 2022/5/31.
  * 编写代码来计算Cn的准确值,在N=100~1000和10000的情况下比较准确值和估计值2NlnN的差距
  **/
+// 期望的比较次数
 public class Ex20306 {
     // 100 789 1328 -539
     // 1000 11863 19931 -8068

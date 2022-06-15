@@ -7,5 +7,6 @@ package cat20.ex2;
  * 最坏情况是N
  * 平均情况也是lgN(因为有洗牌程序)
  **/
+// 递归轨迹
 public class Ex20313 {
 }

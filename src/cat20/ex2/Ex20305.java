@@ -6,6 +6,7 @@ import lib.PrintUtils;
  * Created by Wusd on 2022/5/31.
  * 给出一段代码将已知只有两种主键值的数组排序
  **/
+// Quick3way处理重复值较多
 public class Ex20305 {
     public static void sort(Comparable[] a) {
         int N = a.length;

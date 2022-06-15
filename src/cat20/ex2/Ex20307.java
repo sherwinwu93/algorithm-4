@@ -10,6 +10,7 @@ import edu.princeton.cs.algs4.StdRandom;
  * 1 N/3
  * 2 N/6
  **/
+// 子数组的数量
 public class Ex20307 {
     public static void main(String[] args) {
         int N = 1000;

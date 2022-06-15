@@ -3,6 +3,7 @@ package cat20.ex2;
 /**
  * Created by Wusd on 2022/5/31.
  **/
+// 切分轨迹
 public class Ex20301 {
     // 切分时,左右扫描共有四种情况
     // 假设a[lo]为0
