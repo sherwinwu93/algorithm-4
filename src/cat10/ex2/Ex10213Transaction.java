@@ -1,6 +1,9 @@
 package cat10.ex2;
 
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Transaction;
+
+import java.util.Comparator;
 
 public class Ex10213Transaction implements Comparable<Ex10213Transaction> {
     private final String who;
@@ -49,6 +52,18 @@ public class Ex10213Transaction implements Comparable<Ex10213Transaction> {
     }
     public int hashCode() {
         return super.hashCode();
+    }
+
+    public Comparator<Ex10213Transaction> howMuchOrder() {
+        return new HowMuchOrder();
+    }
+
+    public static class HowMuchOrder implements Comparator<Ex10213Transaction> {
+        public int compare(Ex10213Transaction v, Ex10213Transaction w) {
+            if (v.amount < w.amount) return -1;
+            if (v.amount > w.amount) return 1;
+            return 0;
+        }
     }
 
     public static Ex10213Transaction parseTransaction(String string) {

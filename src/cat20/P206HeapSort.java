@@ -4,13 +4,12 @@ import lib.PrintUtils;
 
 /**
  * Created by Wusd on 2022/6/15.
+ * 利用堆进行排序的堆排序,有效利用空间和时间  NlgN
  **/
-//经典而优雅
 public class P206HeapSort {
-    // 2N + 2NlgN
     public static void sort(Comparable[] a) {
         int N = a.length;
-        for (int k = N / 2; k >= 1; k--)
+        for (int k = N/2; k >= 1; k--)
             sink(a, k, N);
 
         while (N > 1) {
@@ -23,17 +22,17 @@ public class P206HeapSort {
             int j = k * 2;
             if (j < N && less(a, j, j+1)) j++;
             if (!less(a, k, j)) break;
-            exch(a, k, j);
+            exch(a, j, k);
             k = j;
         }
     }
     private static void exch(Comparable[] a, int i, int j) {
-        Comparable t = a[i -1];
-        a[i-1] = a[j-1];
-        a[j-1]=t;
+        Comparable t = a[i - 1];
+        a[i - 1] = a[j - 1];
+        a[j - 1] = t;
     }
-    private static boolean less(Comparable[] a, int i, int j) {
-        return a[i - 1].compareTo(a[j-1]) < 0;
+    private static boolean less(Comparable[] a, int i, int j){
+        return a[i - 1].compareTo(a[j - 1]) < 0;
     }
 
     public static void main(String[] args) {
