@@ -124,9 +124,9 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
 
     // flipColor
     private void flipColors(Node h) {
-        h.left.color = BLACK;
-        h.right.color = BLACK;
-        h.color = RED;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+        h.color = !h.color;
     }
 
     public void put(Key key, Value val) {
@@ -138,7 +138,6 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         if (h == null) return new Node(key, val, 1, RED);
 
         // 递归沿树向下
-        if (isRed(h.left) && isRed(h.right)) flipColors(h);
         int cmp = key.compareTo(h.key);
         if (cmp < 0) h.left = put(h.left, key, val);
         else if (cmp > 0) h.right = put(h.right, key, val);
@@ -148,12 +147,25 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         // 右倾, 左转
         if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
         if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
 
         h.N = size(h.left) + size(h.right) + 1;
         return h;
     }
     private boolean isEmpty() {
         return root == null;
+    }
+
+    private Node moveRedLeft(Node h) {
+        // 假设node h is Red, h.left 和 h.left.left都是黑色
+        // 将h.left或者 h.left的子结点之一变红
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
     }
 
     // 树的删除方法: 替换为右子树最小的node,然后再删除右子树的最小node
@@ -164,17 +176,6 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         root = deleteMin(root);
         // root不为null, 设置root.color = BLACK
         if (!isEmpty()) root.color = BLACK;
-    }
-
-    private Node moveRedLeft(Node h) {
-        // 假设node h is Red, h.left 和 h.left.left都是黑色
-        // 将h.left或者 h.left的子结点之一变红
-        flipColors(h);
-        if (isRed(h.right.left)) {
-            h.right = rotateRight(h.right);
-            h = rotateLeft(h);
-        }
-        return h;
     }
 
     private Node deleteMin(Node h) {
@@ -191,7 +192,6 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
     }
 
     private Node balance(Node h) {
-        if (isRed(h.right)) h = rotateLeft(h);
 
         if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
         if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
@@ -202,8 +202,11 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
 
     private Node moveRedRight(Node h) {
         flipColors(h);
-        if (!isRed(h.left.left))
+        // 因为本来就是左倾的,可以不用h.left = rotateLeft(h.left);
+        if (isRed(h.left.left)) {
             h = rotateRight(h);
+            flipColors(h);
+        }
         return h;
     }
     public void deleteMax() {
@@ -268,9 +271,11 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
 
     public static void main(String[] args) {
         P281RedBlackBST<String, Integer> st = new P281RedBlackBST<>();
-        st.put("b", 1);
-        st.put("a", 1);
-        st.put("c", 1);
+
+//        String s = "bac";
+        String s = "badc";
+        for (String key : s.split(""))
+            st.put(key, 1);
         st.deleteMin();
         System.out.println();
     }
