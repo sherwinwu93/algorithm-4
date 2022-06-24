@@ -125,7 +125,7 @@ public class BST <Key extends Comparable, Value>{
         if (cmp < 0) x.left = put(x.left, key, val);
         else if (cmp > 0) x.right = put(x.right, key, val);
         else x.val = val;
-        x.count = size(x.left) + size(x.right);
+        x.count = size(x.left) + size(x.right) + 1;
         return x;
     }
     public Value get(Key key) {
