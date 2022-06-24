@@ -138,6 +138,7 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         if (h == null) return new Node(key, val, 1, RED);
 
         // 递归沿树向下
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
         int cmp = key.compareTo(h.key);
         if (cmp < 0) h.left = put(h.left, key, val);
         else if (cmp > 0) h.right = put(h.right, key, val);
@@ -147,24 +148,27 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         // 右倾, 左转
         if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
         if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
-        if (isRed(h.left) && isRed(h.right)) flipColors(h);
 
         h.N = size(h.left) + size(h.right) + 1;
         return h;
-    }
-
-    // 树的删除方法: 替换为右子树最小的node,然后再删除右子树的最小node
-    public void deleteMin() {
-        if (!isRed(root.left) && !isRed(root.right))
-            root.color = RED;
-        root = deleteMin(root);
-        if (!isEmpty()) root.color = BLACK;
     }
     private boolean isEmpty() {
         return root == null;
     }
 
+    // 树的删除方法: 替换为右子树最小的node,然后再删除右子树的最小node
+    public void deleteMin() {
+        // 2-node结点,那么root是红的
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMin(root);
+        // root不为null, 设置root.color = BLACK
+        if (!isEmpty()) root.color = BLACK;
+    }
+
     private Node moveRedLeft(Node h) {
+        // 假设node h is Red, h.left 和 h.left.left都是黑色
+        // 将h.left或者 h.left的子结点之一变红
         flipColors(h);
         if (isRed(h.right.left)) {
             h.right = rotateRight(h.right);
@@ -174,10 +178,15 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
     }
 
     private Node deleteMin(Node h) {
+        // 如果left为null,删除自身,也就是返回空
         if (h.left == null) return null;
+        // h是2-node, h.left 也是2-node
         if (!isRed(h.left) && !isRed(h.left.left))
+            // moveRedLeft
             h = moveRedLeft(h);
+        // 已经得到了3-node,或者4-node, 直接删除就好
         h.left = deleteMin(h.left);
+        // 自底向上, 分解4-node
         return balance(h);
     }
 
@@ -255,5 +264,14 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
         if (cmp < 0) return get(h.left, key);
         else if (cmp > 0) return get(h.right, key);
         else return h.val;
+    }
+
+    public static void main(String[] args) {
+        P281RedBlackBST<String, Integer> st = new P281RedBlackBST<>();
+        st.put("b", 1);
+        st.put("a", 1);
+        st.put("c", 1);
+        st.deleteMin();
+        System.out.println();
     }
 }
