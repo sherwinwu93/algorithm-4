@@ -155,25 +155,105 @@ public class P281RedBlackBST<Key extends Comparable, Value> {
 
     // 树的删除方法: 替换为右子树最小的node,然后再删除右子树的最小node
     public void deleteMin() {
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
         root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+    private boolean isEmpty() {
+        return root == null;
     }
 
-    // 几种情况
-    private Node deleteMin(Node x) {
-        if (x.left == null) return null;
-        // 爹是2-node
-        int nodeCount = nodeCount(x);
-
-        x.left = deleteMin(x.left);
-        x.N = 1 + size(x.left) + size(x.right);
-
-        return null;
+    private Node moveRedLeft(Node h) {
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+        }
+        return h;
     }
 
-    private int nodeCount(Node x) {
-        if (!isRed(x.left) && !isRed(x.right)) return 2;
-        else if (isRed(x.left) && !isRed(x.right)) return 3;
-        else return 4;
+    private Node deleteMin(Node h) {
+        if (h.left == null) return null;
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+        h.left = deleteMin(h.left);
+        return balance(h);
     }
 
+    private Node balance(Node h) {
+        if (isRed(h.right)) h = rotateLeft(h);
+
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+
+    private Node moveRedRight(Node h) {
+        flipColors(h);
+        if (!isRed(h.left.left))
+            h = rotateRight(h);
+        return h;
+    }
+    public void deleteMax() {
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+        if (isRed(h.left))
+            h = rotateRight(h);
+        if (h.right == null)
+            return null;
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
+    }
+
+    public void delete(Key key) {
+        if (!isRed(root.left) && isRed(root.right))
+            root.color = RED;
+        root = delete(root, key);
+        if (!isEmpty()) root.color = BLACK;
+    }
+    private Node delete(Node h, Key key) {
+        if (key.compareTo(h.key) < 0) {
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left, key);
+        } else {
+            if (isRed(h.left)) h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                h.val = get(h.right, min(h.right).key);
+                h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            } else h.right = delete(h.right, key);
+        }
+        return balance(h);
+    }
+    private Node min(Node x) {
+        if (x == null) return null;
+        while (x.left != null)
+            x = x.left;
+        return x;
+    }
+    public Value get(Key key) {
+        return get(root, key);
+    }
+    private Value get(Node h, Key key) {
+        if (h == null) return null;
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) return get(h.left, key);
+        else if (cmp > 0) return get(h.right, key);
+        else return h.val;
+    }
 }
