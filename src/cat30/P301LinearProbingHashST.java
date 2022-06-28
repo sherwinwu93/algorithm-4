@@ -6,6 +6,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Created by Wusd on 2022/6/28.
+ * 线性探测法
  **/
 public class P301LinearProbingHashST<Key, Value> {
     private static final int INIT_CAPACITY = 4;
