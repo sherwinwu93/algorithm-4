@@ -1,5 +1,7 @@
 package cat30;
 
+import java.util.HashMap;
+
 /**
  * Created by Wusd on 2022/6/24.
  * 算法3.4 红黑树的插入算法
