@@ -67,7 +67,8 @@ public class DepthFirstPaths {
             if (dfs.hasPathTo(v)) {
                 StdOut.printf("%d to %d: ", s, v);
                 for (int x : dfs.pathTo(v)) {
-                    StdOut.print("-" + x);
+                    if (x == s) StdOut.print("-" + x);
+                    else StdOut.print("-" + x);
                 }
                 StdOut.println();
             } else {
