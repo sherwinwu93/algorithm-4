@@ -1,10 +1,6 @@
 package cat10;
 
-import com.sun.javafx.scene.control.behavior.SplitMenuButtonBehavior;
-import edu.princeton.cs.algs4.Interval2D;
 import edu.princeton.cs.algs4.StdOut;
-
-import java.util.Date;
 
 public class P057Date {
     private final int value;
