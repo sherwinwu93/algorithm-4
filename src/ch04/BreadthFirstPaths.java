@@ -34,6 +34,51 @@ public class BreadthFirstPaths {
 //        assert check(graph, s);
     }
 
+    public BreadthFirstPaths(Graph graph, Iterable<Integer> sources) {
+        marked = new boolean[graph.V()];
+        distTo = new int[graph.V()];
+        edgeTo = new int[graph.V()];
+        for (int v = 0; v < graph.V(); v++) {
+            distTo[v] = INFINITY;
+        }
+        validateVertices(sources);
+        bfs(graph, sources);
+    }
+
+    private void bfs(Graph graph, Iterable<Integer> sources) {
+        Queue<Integer> queue = new Queue<>();
+        for (int s : sources) {
+            marked[s] = true;
+            distTo[s] = 0;
+            queue.enqueue(s);
+        }
+        while (!queue.isEmpty()) {
+            int v = queue.dequeue();
+            for (int w : graph.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    queue.enqueue(w);
+                }
+            }
+        }
+    }
+
+    private void validateVertices(Iterable<Integer> vertices) {
+        if (vertices == null)
+            throw new IllegalArgumentException("argument is null");
+        int vertexCount = 0;
+        for (Integer v : vertices) {
+            vertexCount++;
+            if (v == null) {
+                throw new IllegalArgumentException("vertex is null");
+            }
+            validateVertex(v);
+        }
+        if (vertexCount == 0) throw new IllegalArgumentException("zero vertices");
+    }
+
     // breadth-first search from a single source
     private void bfs(Graph graph, int s) {
         Queue<Integer> queue = new Queue<>();
@@ -60,10 +105,6 @@ public class BreadthFirstPaths {
     private void validateVertex(int v) {
         int V = marked.length;
         if (v < 0 || v >= V) throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
-    }
-
-    public BreadthFirstPaths(Graph graph, Iterable<Integer> sources) {
-
     }
 
     public boolean hasPathTo(int v) {
