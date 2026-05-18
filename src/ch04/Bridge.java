@@ -39,9 +39,11 @@ public class Bridge {
         for (int w : G.adj(v)) {
             // unmarked,未被访问过
             if (pre[w] == -1) {
+                // 先dfs, 因为这样才能把后续的点走遍
                 dfs(G, v, w);
                 low[v] = Math.min(low[v], low[w]);
-                if (low[w] == pre[w]) {
+                if (low[w] == pre[w]) {// 相邻点是其祖先点,则没有成环,则v-w是桥
+                    // low[w] == pre[w] → w 回不到过去 → 父子边是唯一的路 → 是桥
                     StdOut.println(v + "-" + w + " is a bridge");
                     bridges++;
                 }
@@ -56,7 +58,27 @@ public class Bridge {
         return bridges + 1;
     }
 
+    /**
+     * java 20 20
+     * @param args
+     */
     public static void main(String[] args) {
+//        testOriginal(args);
+        testCyclic();
+    }
+
+    private static void testCyclic() {
+        Graph G = new Graph(4);
+        G.addEdge(3, 0);
+        G.addEdge(0, 1);
+        G.addEdge(1, 2);
+        G.addEdge(2, 3);
+
+        Bridge bridge = new Bridge(G);
+        StdOut.println("Edge connected components = " + bridge.components());
+    }
+
+    private static void testOriginal(String[] args) {
         int V = Integer.parseInt(args[0]);
         int E = Integer.parseInt(args[1]);
         Graph G = GraphGenerator.simple(V, E);
