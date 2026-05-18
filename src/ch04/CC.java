@@ -12,6 +12,7 @@ import edu.princeton.cs.algs4.StdOut;
  *      对给定的点,返回其所在连通分量的大小
  *      对给定的两点,返回其是否相连,即在同一连通分量中
  *  实现: 对每个点dfs, 如果没有被marked,则说明是新的连通分量,count+1,id+1
+ *  时间: V+E
  */
 public class CC {
     // marked[v] = has vertex v been marked?
